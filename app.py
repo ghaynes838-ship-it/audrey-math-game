@@ -4,6 +4,37 @@ import math
 import streamlit as st
 
 # -----------------------------
+# Parent PIN Gate
+# -----------------------------
+PARENT_PIN = "3683"  # 🔐 CHANGE THIS
+
+if "unlocked" not in st.session_state:
+    st.session_state.unlocked = False
+
+if not st.session_state.unlocked:
+    st.title("🔒 Parent Access")
+
+    st.write("Please enter the parent PIN to continue.")
+
+    pin_input = st.text_input(
+        "PIN",
+        type="password",
+        max_chars=6,
+        placeholder="Enter PIN"
+    )
+
+    if st.button("Unlock"):
+        if pin_input == PARENT_PIN:
+            st.session_state.unlocked = True
+            st.success("Access granted")
+            st.rerun()
+        else:
+            st.error("Incorrect PIN")
+
+    st.stop()  # ⛔ Stops the app here until unlocked
+
+
+# -----------------------------
 # Difficulty settings (1–5)
 # -----------------------------
 LEVEL_SETTINGS = {
